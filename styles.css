@@ -1,0 +1,429 @@
+:root {
+  --bg-default: #1e1e2f;
+  --bg-container: #2a2a3c;
+  --text-color: #e5e5e5;
+  --primary-color: #cf6a32;   /* orange */
+  --secondary-color: #ffd700; /* yellow */
+  --highlight-color: #4caf50; /* current player */
+  --border-color: #393e46;
+}
+
+/* Global resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevent outer scrolling */
+html, body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg-default);
+  color: var(--text-color);
+  font-family: 'VT323', monospace;  /* pixel-art font */
+  font-size: 18px;                  /* bumped up slightly */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center content vertically */
+  text-align: center;
+  overflow-x: hidden;
+  padding: 1rem; /* Add some padding around the content */
+}
+
+body, button {
+  font-family: 'VT323', monospace;
+  /* VT323 renders best between 14px–18px */
+  /* font-size: 16px; */
+}
+
+.hidden {
+  display: none !important;
+}
+
+@keyframes fadeInOut {
+  0%, 100%   { opacity: 1; }
+  50%        { opacity: 0.3; }
+}
+/* Title Gradient */
+#title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  animation: fadeInOut 3s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* MENU */
+#menu {
+  width: 100%;
+  max-width: 600px;
+  background: var(--bg-container);
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow: visible;
+}
+
+#player-form {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+#player-form input {
+  flex: 1;
+  padding: 0.6rem;
+  font-size: 1rem;
+  background: var(--bg-default);
+  color: var(--text-color);
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+}
+
+/* Player list in menu */
+#player-list-menu {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+}
+#player-list-menu li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+/* 'X' remove button */
+.remove-button {
+  margin-left: 1rem;
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.remove-button:hover {
+  color: var(--primary-color);
+  transform: scale(1.2);
+}
+
+/* Modern/futuristic buttons */
+button {
+  background: var(--primary-color);
+  color: #fff;
+  border: 2px solid var(--secondary-color);
+  border-radius: 8px;
+  padding: 0.8rem 1.4rem;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease,
+              transform 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+button:disabled {
+  background: #333;
+  border-color: #555;
+  cursor: not-allowed;
+}
+
+button:not(:disabled):hover {
+  background: var(--secondary-color);
+  color: var(--bg-default);
+  box-shadow: 0 0 12px var(--primary-color),
+              inset 0 0 8px rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+#start-game-btn {
+  margin-top: 0.5rem;
+}
+
+/* GAME & STATUS */
+#game {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the status bar and game-container */
+  height: 100%;
+  width: 100%; /* Occupy full width to allow centering its content */
+  margin: 0;
+  overflow: hidden;
+}
+
+#status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-container);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  flex-shrink: 0;
+  margin-bottom: 1rem;
+  width: 100%; /* This will be constrained by game-container's max-width */
+}
+
+#status-left p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--highlight-color);
+}
+
+#status-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Dice icon in orange instead of yellow */
+#dice-result i {
+  color: var(--primary-color);
+  font-size: 2.2rem;
+}
+
+#moves-remaining {
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+/* GAME & SIDEBAR */
+#game-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  flex-grow: 1;
+  overflow: hidden;
+  width: 100%; /* Ensure it takes up the available width */
+}
+
+/* Add a max-width to both status and game-container to align them */
+#status, #game-container {
+    max-width: 1200px;
+}
+
+
+/* GRID (chess-pattern mugs) */
+#grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  background: var(--bg-container);
+  padding: 6px;
+  border-radius: 8px;
+  aspect-ratio: 1 / 1;
+  max-height: 100%;
+  width: auto;
+}
+
+.block {
+  background: var(--bg-container);
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.block:hover {
+  transform: scale(1.1);
+}
+.block.removed {
+  opacity: 0.2;
+  cursor: default;
+}
+.block.mine-hit {
+  background: #e63946;
+  color: #fff;
+  opacity: 1;
+}
+.block i {
+  font-size: 1.4rem;
+  color: var(--primary-color);
+}
+.block.alt i {
+  color: var(--secondary-color);
+}
+.block.disabled {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* hide remove buttons after start */
+#game .remove-button {
+  display: none;
+}
+
+/* SIDEBAR */
+#players-sidebar {
+  background: var(--bg-container);
+  padding: 1rem;
+  border-radius: 8px;
+  width: 220px;
+  flex-shrink: 0;
+}
+#players-sidebar h2 {
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+#players-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#players-sidebar li {
+  padding: 0.3rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0.5;
+}
+#players-sidebar li.current {
+  color: var(--highlight-color);
+  opacity: 1;
+  font-weight: bold;
+}
+
+/* Sidebar counter styling */
+#players-sidebar hr {
+  border: none;
+  border-top: 2px solid var(--border-color);
+  margin: 1rem 0;
+}
+
+#blocks-counter p:first-child {
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+
+#blocks-remaining-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+
+/* POPUP */
+#popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.popup-content {
+  background: var(--bg-container);
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 90%;
+  overflow-y: auto;
+}
+.popup-content p {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+.popup-content button {
+  margin: 0 0.3rem;
+}
+
+/* MOBILE: keep form and status all inline */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+    justify-content: center; /* Center the menu vertically */
+  }
+  #game {
+    height: 100%;
+    overflow: hidden;
+  }
+  #player-form {
+    flex-direction: row;
+  }
+  #status {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  #status-right {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  #game-container {
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-evenly; /* Evenly distribute grid and sidebar */
+    gap: 1rem;
+  }
+  #players-sidebar {
+    width: 100%;
+    margin-top: 0; /* Remove margin, use gap from parent instead */
+    flex-shrink: 0;
+  }
+  #grid {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+  }
+  #player-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    justify-items: center;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    gap: 0.5rem;
+  }
+  #player-list li {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+/* LARGE SCREENS (desktops) */
+@media (min-width: 1200px) {
+  body {
+    font-size: 1.1rem;
+  }
+  #title {
+    font-size: 3rem;
+  }
+  button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+  #status-left p {
+    font-size: 1.4rem;
+  }
+  #grid {
+    gap: 8px;
+  }
+  .block {
+    border-width: 3px;
+  }
+  .block i {
+    font-size: 1.6rem;
+  }
+  #player-list-menu li {
+    margin-bottom: 1rem;
+  }
+  #menu {
+    padding: 2rem;
+  }
+}

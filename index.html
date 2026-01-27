@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drinking game</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="menu">
+    <h1 id="title">Minefield Game</h1>
+    <form id="player-form">
+      <input type="text" id="player-name-input" placeholder="Enter player name" autocomplete="off" />
+      <button type="submit" id="add-player-btn" disabled>Add Player</button>
+    </form>
+    <ul id="player-list-menu"></ul>
+    <p id="max-message" class="hidden">Max players reached</p>
+    <button id="start-game-btn" disabled>Start Game</button>
+  </div>
+
+  <div id="game" class="hidden">
+    <div id="status">
+      <div id="status-left">
+        <p id="current-player"></p>
+      </div>
+      <div id="status-right">
+        <button id="roll-dice-btn" class="hidden">Roll Dice</button>
+        <div id="dice-result"></div>
+        <div id="moves-remaining"></div>
+      </div>
+    </div>
+
+    <div id="game-container">
+      <div id="grid"></div>
+      <div id="players-sidebar">
+        <h2>Players</h2>
+        <ul id="player-list"></ul>
+        <hr />
+        <div id="blocks-counter">
+          <p>Blocks Remaining</p>
+          <p id="blocks-remaining-value"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="popup" class="hidden">
+    <div class="popup-content">
+      <p id="popup-message"></p>
+      <button id="popup-close">OK</button>
+      <div id="popup-endgame-buttons" class="hidden">
+        <button id="restart-btn">Restart</button>
+        <button id="exit-btn">Exit</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
